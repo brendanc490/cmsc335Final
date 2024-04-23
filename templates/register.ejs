@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Poke Fight</title>
+</head>
+
+<body>
+
+	<h1>PokeFight</h1>
+
+    <h2>Register</h2>
+
+    <form id="registerForm" action="" method="post" onsubmit="return validateInfo(event)">
+        <%- error -%>
+        <fieldset>
+            <label><b>Username: </b><input type="text" name="username" id="username"></label>
+            <br>
+            <label><b>Password: </b><input type="text" name="password" id="password"></label>
+            <br>
+            <label><b>Confirm Password: </b><input type="text" name="password" id="confPassword"></label>
+            <br>
+            <input type="submit" value="Register" id="login">
+        </fieldset>
+    </form>
+
+    Already have an account? <br><a href="./">Login here</a>
+
+    <script src="../static/register.js"></script>
+</body>
+
+</html>

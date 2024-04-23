@@ -1,0 +1,196 @@
+* {
+    box-sizing: border-box;
+  }
+
+  body {
+    overflow-y: hidden;
+  }
+
+  
+  /*the container must be positioned relative:*/
+  .autocomplete {
+    position: relative;
+    display: inline-block;
+  }
+  
+  input {
+    border: 1px solid transparent;
+    background-color: #f1f1f1;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  input[type=text] {
+    background-color: #f1f1f1;
+    width: 100%;
+  }
+  
+  input[type=submit] {
+    background-color: DodgerBlue;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .autocomplete-items {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 200px;
+    overflow-y: scroll;
+    width: fit-content;
+  }
+  
+  .autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #fff; 
+    border-bottom: 1px solid #d4d4d4; 
+  }
+  
+  /*when hovering an item:*/
+  .autocomplete-items div:hover {
+    background-color: #e9e9e9; 
+  }
+  
+  /*when navigating through the items using the arrow keys:*/
+  .autocomplete-active {
+    background-color: DodgerBlue !important; 
+    color: #ffffff; 
+  }
+
+  #teamLayout {
+    position: fixed;
+    left: 5%;
+    display: grid;
+    height: 80%;
+    width: 90%;
+    grid-template-areas:
+    'p1 p2 p3'
+    'p4 p5 p6';
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 50% 50%;
+  }
+
+
+  .pokemon {
+    position: absolute;
+    left: 5%;
+    display: grid;
+    grid-template-areas: 
+    'name sprite'
+    'm1 m2'
+    'm3 m4';
+    border: 1px solid black;
+    height: 60%;
+    width: 90%;
+  }
+
+  .name {
+    grid-area: name;
+    margin: auto;
+  }
+
+  .sprite {
+    grid-area: sprite;
+  }
+
+  .m1 {
+    grid-area: m1;
+    display: grid;
+    grid-template-areas: 
+    'name name type'
+    'power accuracy pp'
+    'desc desc desc';
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 33% 33% 33%;
+    border: 1px solid black;
+
+  }
+
+  .m2 {
+    grid-area: m2;
+    display: grid;
+    grid-template-areas: 
+    'name name type'
+    'power accuracy pp'
+    'desc desc desc';
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 33% 33% 33%;
+    border: 1px solid black;
+  }
+
+  .m3 {
+    grid-area: m3;
+    display: grid;
+    grid-template-areas: 
+    'name name type'
+    'power accuracy pp'
+    'desc desc desc';
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 33% 33% 33%;
+    border: 1px solid black;
+  }
+
+  .m4 {
+    grid-area: m4;
+    display: grid;
+    grid-template-areas: 
+    'name name type'
+    'power accuracy pp'
+    'desc desc desc';
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 33% 33% 33%;
+    border: 1px solid black;
+  }
+
+  .type {
+    grid-area: type;
+    margin: auto;
+  }
+
+  .moveName {
+    grid-area: name;
+    margin: auto;
+
+  }
+
+  .power {
+    grid-area: power;
+    margin: auto;
+    
+  }
+
+  .accuracy {
+    grid-area: accuracy;
+    margin: auto;
+    
+  }
+
+  .pp {
+    grid-area: pp;
+    margin: auto;
+    
+  }
+
+  .sprite {
+    width: 80px;
+    height: 80px;
+    margin: auto;
+  }
+
+  .desc {
+    grid-area: desc;
+    margin: auto;
+  }
+
+  td {
+    width: 96px;
+    height: 96px;
+    text-align: center;
+  }
