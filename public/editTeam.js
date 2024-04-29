@@ -129,6 +129,8 @@ async function changeActivePokemon(evt) {
             activePokemon.parentElement.style.backgroundColor = 'white'
         }
     }
+    activePokemon = active;
+    active.parentElement.style.backgroundColor = 'red'
     moves = []
     if(team[active.id].name){
         let res = await fetch('https://pokeapi.co/api/v2/pokemon/'+(team[active.id].name.toLowerCase()));
@@ -164,8 +166,6 @@ async function changeActivePokemon(evt) {
         p.value = ""
         resetPokemonUI();
     }
-    activePokemon = active;
-    active.parentElement.style.backgroundColor = 'red'
 }
 
 async function changeMove(evt) {
@@ -297,7 +297,6 @@ function autocomplete(inp) {
             b.innerHTML += arr[i].substr(val.length);
             /*insert a input field that will hold the current array item's value:*/
             b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-            console.log('making it')
             /*execute a function when someone clicks on the item value (DIV element):*/
             b.addEventListener("mousedown", function(e) {
                       
@@ -308,7 +307,6 @@ function autocomplete(inp) {
             team[activePokemon.id][inp.id] = this.getElementsByTagName("input")[0].value;
         });
            
-            console.log(b.onclick)
             a.appendChild(b);
           }
         }
