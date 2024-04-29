@@ -222,8 +222,10 @@ async function changeMove(evt) {
 function resetPokemonUI(){
     moves = [];
     pSprite.style.display = 'none';
-    team[activePokemon.id].name = "";
-    team[activePokemon.id].sprite = "";
+    if(activePokemon){
+      team[activePokemon.id].name = "";
+      team[activePokemon.id].sprite = "";
+    }
     m1.disabled = true;
     m2.disabled = true;
     m3.disabled = true;
@@ -250,14 +252,16 @@ function resetMoveUI(move) {
     move.parentElement.parentElement.parentElement.querySelectorAll("div")[4].innerText = "Accuracy: ";
     move.parentElement.parentElement.parentElement.querySelectorAll("div")[5].innerText = "PP: ";
     move.parentElement.parentElement.parentElement.querySelectorAll("div")[6].innerText = "Description: ";
-    let newMove = {}
-    newMove.name = "";
-    newMove.power = "";
-    newMove.accuracy = "";
-    newMove.pp = "";
-    newMove.description = "";
-    newMove.type = "";
-    team[activePokemon.id][move.id] = newMove;
+    if(activePokemon){
+      let newMove = {}
+      newMove.name = "";
+      newMove.power = "";
+      newMove.accuracy = "";
+      newMove.pp = "";
+      newMove.description = "";
+      newMove.type = "";
+      team[activePokemon.id][move.id] = newMove;
+    }
 }
 
 function autocomplete(inp) {
