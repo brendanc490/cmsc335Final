@@ -10,13 +10,16 @@
 <body>
     <h1>Your Team</h1>
 
-    <table style="margin: auto" border="1"><tr><td><img id="p1" src="" class="sprite" style="opacity: 0;"></td><td><img id="p2"src="" class="sprite" style="opacity: 0;"></td><td><img id="p3" src="" class="sprite" style="opacity: 0;"></td><td><img id="p4" src="" class="sprite" style="opacity: 0;"></td><td><img id="p5" src="" class="sprite" style="opacity: 0;"></td><td><img id="p6" src="" class="sprite" style="opacity: 0;"></td></tr></table>
+    <button onclick="navToHome()">Return</button>
+
+    <%- team -%>
+    <!--<table style="margin: auto" border="1"><tr><td><img id="p1" src="" class="sprite" style="opacity: 0;"></td><td><img id="p2"src="" class="sprite" style="opacity: 0;"></td><td><img id="p3" src="" class="sprite" style="opacity: 0;"></td><td><img id="p4" src="" class="sprite" style="opacity: 0;"></td><td><img id="p5" src="" class="sprite" style="opacity: 0;"></td><td><img id="p6" src="" class="sprite" style="opacity: 0;"></td></tr></table>-->
     <br>
     <br>
-    <form autocomplete="off" class="pokemon">
+    <form autocomplete="off" class="pokemon" action="" method="post" onsubmit="return validateTeam(event)">
         <div class="name">
             Pokemon: <div class="autocomplete" style="width:200px;">
-                <input id="name" type="text" name="name" autocomplete="off">
+                <input id="name" type="text" name="name" autocomplete="off" disabled>
               </div>
         </div>
        
@@ -46,7 +49,7 @@
             </div>
 
             <div class="desc">
-                
+                Description:
             </div>
             
         </div>
@@ -73,7 +76,7 @@
             </div>
 
             <div class="desc">
-                
+                Description:
             </div>
         </div>
 
@@ -99,7 +102,7 @@
             </div>
 
             <div class="desc">
-                
+                Description:
             </div>
         </div>
 
@@ -125,10 +128,16 @@
             </div>
 
             <div class="desc">
-                
+                Description:
             </div>
         </div>
+        
     </form>
+    <div style="position: absolute; bottom: 5%; width: 100%;">
+        <button id="saveTeam" onclick="sendTeam()">Save Team</button>
+    </div>
+   
+    <%- teamScript -%>
     <script src="../static/gen1Moves.js"></script>
     <script src="../static/editTeam.js"></script>
 </body>

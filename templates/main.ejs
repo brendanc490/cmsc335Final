@@ -11,7 +11,8 @@
 	<h1>Main Page</h1>
 
     <h2>Your Team</h2>
-    <table border="1" id="team">
+    <%- team -%>
+   <!-- <table border="1" id="team">
         <tr><th>Pokemon</th></tr>
         <tr><td id="p1">None</td></tr>
         <tr><td id="p2">None</td></tr>
@@ -19,16 +20,9 @@
         <tr><td id="p4">None</td></tr>
         <tr><td id="p5">None</td></tr>
         <tr><td id="p6">None</td></tr>
-    </table>
+    </table>-->
 
-    <button>Edit Team</button>
-
-    <h2>Battle</h2>
-
-    <button>Create a battle</button>
-    Or
-    <input type="text" id="code" placeholder="Enter game code">
-    <button>Join a battle</button>
+    <button onclick="openEditTeam()">Edit Team</button>
 
     <script src="../static/main.js"></script>
 </body>

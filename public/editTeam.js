@@ -28,15 +28,6 @@ const pokemon = [];
 var moves = [];
 var activePokemon;
 
-const team = {
-    p1: {name: "", m1: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}, m2: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}, m3: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}, m4: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}},
-    p2: {name: "", m1: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}, m2: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}, m3: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}, m4: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}},
-    p3: {name: "", m1: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}, m2: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}, m3: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}, m4: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}},
-    p4: {name: "", m1: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}, m2: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}, m3: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}, m4: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}},
-    p5: {name: "", m1: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}, m2: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}, m3: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}, m4: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}},
-    p6: {name: "", m1: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}, m2: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}, m3: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}, m4: {name: "", type: "", power: 0, accuracy: 0, pp: 0, description: ""}}
-}
-
 window.onload = async function() {
     let res = await fetch('https://pokeapi.co/api/v2/pokedex/2');
     let pokedex = await res.json();
@@ -46,25 +37,43 @@ window.onload = async function() {
         pokemon.push(mon.pokemon_species.name.charAt(0).toUpperCase()
         + mon.pokemon_species.name.slice(1))
     })
+
     autocomplete(p, pokemon);
-    p.onfocus = autodisplay(p, pokemon)
+    autodisplay(p, pokemon);
     p1.onclick = changeActivePokemon;
-    p1.dispatchEvent(new Event('click'))
     p2.onclick = changeActivePokemon;
     p3.onclick = changeActivePokemon;
     p4.onclick = changeActivePokemon;
     p5.onclick = changeActivePokemon;
     p6.onclick = changeActivePokemon;
 
+
+    autocomplete(m1,moves)
+    autodisplay(m1, moves)
+
+    autocomplete(m2,moves)
+    autodisplay(m2, moves)
+
+    autocomplete(m3,moves)
+    autodisplay(m3, moves)
+
+    autocomplete(m4,moves)
+    autodisplay(m4, moves)
+
     m1.onchange = changeMove
     m2.onchange = changeMove
     m3.onchange = changeMove
     m4.onchange = changeMove
 
+
+
 }
 
 
 p.onchange = async function () {
+    if(p.value == team[activePokemon.id].name){
+      return;
+    }
     if(pokemon.includes(p.value)){
         for(let i = 1; i <= 6; i++){
             if(activePokemon.id == "p"+i){
@@ -76,10 +85,10 @@ p.onchange = async function () {
                 return
             }
         }
-        let res = await fetch('https://pokeapi.co/api/v2/pokemon/'+(p.value.charAt(0).toLowerCase()+p.value.slice(1)));
+        let res = await fetch('https://pokeapi.co/api/v2/pokemon/'+(p.value.toLowerCase()));
         let pokeData = await res.json();
 
-
+        moves = [];
         activePokemon.src = pokeData.sprites.versions['generation-i']['red-blue'].front_default;
         pSprite.src = pokeData.sprites.versions['generation-i']['red-blue'].front_default;
         pokeData.moves.forEach((move) => {
@@ -90,26 +99,20 @@ p.onchange = async function () {
         })
         moves.sort((a,b) => a.localeCompare(b))
         pSprite.style.display = 'block';
-        team[activePokemon.id].name = p.value
+        team[activePokemon.id].name = p.value;
+        team[activePokemon.id].sprite = pokeData.sprites.versions['generation-i']['red-blue'].front_default;
         activePokemon.style.opacity = 1;
 
+        resetMoveUI(m1);
+        resetMoveUI(m2);
+        resetMoveUI(m3);
+        resetMoveUI(m4);
 
         m1.disabled = false;
-        m1.value = "";
-        autocomplete(m1,moves)
-        autodisplay(m1, moves)
         m2.disabled = false;
-        m2.value = "";
-        autocomplete(m2,moves)
-        autodisplay(m2, moves)
         m3.disabled = false;
-        m3.value = "";
-        autocomplete(m3,moves)
-        autodisplay(m3, moves)
         m4.disabled = false;
-        m4.value = "";
-        autocomplete(m4,moves)
-        autodisplay(m4, moves)
+
     } else {
         resetPokemonUI();
         activePokemon.style.opacity = 0;
@@ -118,15 +121,17 @@ p.onchange = async function () {
 
 async function changeActivePokemon(evt) {
     active = evt.target;
+    p.disabled = false;
     if(activePokemon == active){
-        return
+        return;
     } else {
         if(activePokemon){
             activePokemon.parentElement.style.backgroundColor = 'white'
         }
     }
+    moves = []
     if(team[active.id].name){
-        let res = await fetch('https://pokeapi.co/api/v2/pokemon/'+(team[active.id].name.charAt(0).toLowerCase()+team[active.id].name.slice(1)));
+        let res = await fetch('https://pokeapi.co/api/v2/pokemon/'+(team[active.id].name.toLowerCase()));
         let pokeData = await res.json();
         pokeData.moves.forEach((move) => {
             if(gen1Moves[move.move.name]){
@@ -165,7 +170,9 @@ async function changeActivePokemon(evt) {
 
 async function changeMove(evt) {
     let move = evt.target;
-    console.log(move.value.toLowerCase())
+    if(move.value == team[activePokemon.id][move.id].name){
+      return;
+    }
     if(gen1Moves[move.value.toLowerCase()]){
         for(let i = 1; i <= 4; i++){
             if(move.id == "m"+i){
@@ -208,12 +215,15 @@ async function changeMove(evt) {
 
     } else {
         resetMoveUI(move);
+        
     }
 }
 
 function resetPokemonUI(){
     moves = [];
     pSprite.style.display = 'none';
+    team[activePokemon.id].name = "";
+    team[activePokemon.id].sprite = "";
     m1.disabled = true;
     m2.disabled = true;
     m3.disabled = true;
@@ -240,14 +250,27 @@ function resetMoveUI(move) {
     move.parentElement.parentElement.parentElement.querySelectorAll("div")[4].innerText = "Accuracy: ";
     move.parentElement.parentElement.parentElement.querySelectorAll("div")[5].innerText = "PP: ";
     move.parentElement.parentElement.parentElement.querySelectorAll("div")[6].innerText = "Description: ";
+    let newMove = {}
+    newMove.name = "";
+    newMove.power = "";
+    newMove.accuracy = "";
+    newMove.pp = "";
+    newMove.description = "";
+    newMove.type = "";
+    team[activePokemon.id][move.id] = newMove;
 }
 
-function autocomplete(inp, arr) {
+function autocomplete(inp) {
     /*the autocomplete function takes two arguments,
     the text field element and an array of possible autocompleted values:*/
     var currentFocus;
     /*execute a function when someone writes in the text field:*/
     inp.addEventListener("input", function(e) {
+        if(inp.id == "name"){
+          arr = pokemon;
+        } else {
+          arr = moves;
+        }
         var a, b, i, val = this.value;
         /*close any already open lists of autocompleted values*/
         closeAllLists();
@@ -270,16 +293,18 @@ function autocomplete(inp, arr) {
             b.innerHTML += arr[i].substr(val.length);
             /*insert a input field that will hold the current array item's value:*/
             b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+            console.log('making it')
             /*execute a function when someone clicks on the item value (DIV element):*/
-                b.addEventListener("click", function(e) {
-                /*insert the value for the autocomplete text field:*/
-                inp.value = this.getElementsByTagName("input")[0].value;
-                /*close the list of autocompleted values,
-                (or any other open lists of autocompleted values:*/
-                closeAllLists();
-                inp.dispatchEvent(new Event('change'));
-                team[activePokemon.id][inp.id] = this.getElementsByTagName("input")[0].value;
-            });
+            b.addEventListener("mousedown", function(e) {
+                      
+              inp.value = this.getElementsByTagName("input")[0].value;
+
+            closeAllLists();
+            inp.dispatchEvent(new Event('change'));
+            team[activePokemon.id][inp.id] = this.getElementsByTagName("input")[0].value;
+        });
+           
+            console.log(b.onclick)
             a.appendChild(b);
           }
         }
@@ -344,12 +369,17 @@ function autocomplete(inp, arr) {
   });
 }
 
-  function autodisplay(inp, arr) {
+  function autodisplay(inp) {
     /*the autocomplete function takes two arguments,
     the text field element and an array of possible autocompleted values:*/
     var currentFocus;
     /*execute a function when someone writes in the text field:*/
     inp.addEventListener("focus", function(e) {
+      if(inp.id == "name"){
+        arr = pokemon;
+      } else {
+        arr = moves;
+      }
         if(inp.value == ""){
             closeAllLists();
             var a, b, i, val = inp.value;
@@ -362,8 +392,9 @@ function autocomplete(inp, arr) {
                   b.innerHTML += arr[i]
                   /*insert a input field that will hold the current array item's value:*/
                   b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-                    b.addEventListener("click", function(e) {
-                    inp.value = this.getElementsByTagName("input")[0].value;
+                    b.addEventListener("mousedown", function(e) {
+                      
+                      inp.value = this.getElementsByTagName("input")[0].value;
 
                     closeAllLists();
                     inp.dispatchEvent(new Event('change'));
@@ -431,4 +462,48 @@ function autocomplete(inp, arr) {
   document.addEventListener("click", function (e) {
       closeAllLists(e.target);
   });
+}
+
+async function sendTeam() {
+  for(let i = 1; i <= 6; i++){
+    if(team['p'+i].name == ""){
+      alert('Must have 6 pokemon in the team.');
+      return;
+    }
+    for(let j = 1; j <= 4; j++){
+      if(team["p"+i]["m"+j].name == ""){
+        alert('Each pokemon must have 4 moves.');
+        return;
+      }
+    }
+  }
+  let res;
+    try {
+        res = await fetch('./team', {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(team),
+        });
+
+    } catch (e) {
+        alert('Failed to save team');
+        return;
+    }
+    
+    if(!res.ok){
+        alert('Failed to save team');
+        return;
+    } 
+
+    alert('Successfully saved team.');
+}
+
+function navToHome(){
+  if(confirm('You might lose any unsaved changes. Return anyway?')){
+      window.location = window.origin+"/main";
+  }
+
 }

@@ -80,6 +80,7 @@ async function registerUser(username, password) {
     try {
         res = await fetch('./register', {
             method: "POST",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json"
             },
@@ -102,3 +103,5 @@ async function registerUser(username, password) {
     return resp.insertedId;
 
 }
+
+

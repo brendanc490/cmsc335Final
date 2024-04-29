@@ -3,7 +3,7 @@
   }
 
   body {
-    overflow-y: hidden;
+    overflow: hidden;
   }
 
   
@@ -193,4 +193,9 @@
     width: 96px;
     height: 96px;
     text-align: center;
+  }
+
+  #saveTeam {
+    display: flex;
+    margin: auto;
   }

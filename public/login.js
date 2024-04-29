@@ -65,6 +65,7 @@ async function login(username, password) {
     try {
         res = await fetch('./', {
             method: "POST",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json"
             },
