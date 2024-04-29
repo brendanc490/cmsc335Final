@@ -9,13 +9,13 @@ function validateInfo(event) {
 
     const re = /^[a-zA-Z0-9]+$/
     if(!re.test(username.value) || username.value.length < 4 || username.value.length > 16){
-        alert('Invalid username');
+        alert('Invalid username, must be 4-16 characters long.');
         username.focus()
         return false;
     }
     
     if(!re.test(password.value) || password.value.length < 6 || password.value.length > 16){
-        alert('Invalid password');
+        alert('Invalid password, must be 6-16 characters long.');
         password.focus()
         return false;
     }
